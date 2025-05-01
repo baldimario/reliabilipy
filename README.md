@@ -270,6 +270,8 @@ or simply run the `api_client.py` example
 poetry run python examples/api_client.py
 ```
 
+Then on prometheus look for api_client
+
 4. View metrics in Prometheus UI:
 - Open http://localhost:9090 in your browser
 - Go to "Graph" tab
