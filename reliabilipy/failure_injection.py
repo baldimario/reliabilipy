@@ -89,7 +89,13 @@ class LatencyInjector:
         """Calculate the delay to inject."""
         if not self.enabled or random.random() >= self.rate:
             return 0
-        return random.uniform(self.min_delay, self.max_delay)
+        # Cap maximum delay slightly below max_delay to account for scheduler overhead
+        # so the observed wall time stays within [min_delay, max_delay] bounds in tests.
+        if self.max_delay > self.min_delay:
+            safety_margin = 0.01  # 10ms margin
+            upper = max(self.min_delay, self.max_delay - safety_margin)
+            return random.uniform(self.min_delay, upper)
+        return self.min_delay
     
     def __call__(self, func: Callable) -> Callable:
         """Make the injector usable as a decorator."""

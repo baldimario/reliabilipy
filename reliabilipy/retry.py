@@ -13,7 +13,7 @@ class RetryConfig:
         exceptions: Union[Type[Exception], Tuple[Type[Exception], ...]] = (Exception,),
         backoff: str = 'exponential',
         max_retries: int = 3,
-        jitter: bool = True,
+        jitter: bool = False,
         base_delay: float = 1.0,
         max_delay: float = 60.0
     ):
@@ -28,7 +28,7 @@ def retry(
     exceptions: Union[Type[Exception], Tuple[Type[Exception], ...]] = (Exception,),
     backoff: str = 'exponential',
     max_retries: int = 3,
-    jitter: bool = True,
+    jitter: bool = False,
     base_delay: float = 1.0,
     max_delay: float = 60.0
 ) -> Callable:

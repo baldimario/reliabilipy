@@ -11,6 +11,7 @@ A comprehensive Python library for building reliable software with retries, circ
 - 🧪 **Assertions and Safeguards**: Runtime invariant checking
 - 🔥 **Failure Injection**: Tools for chaos engineering and reliability testing
 - 🧠 **Metrics and Observability**: Built-in monitoring and Prometheus integration
+- 🚦 **Throttle (Rate Limiting)**: Limit call rates with token-bucket algorithm
 
 ## Installation
 
@@ -124,6 +125,28 @@ metrics = MetricsCollector(namespace="myapp")
 def process_data():
     # Your code here
     pass
+
+### Throttle (Rate Limiting)
+
+```python
+from reliabilipy import throttle, Throttled
+
+# Sleep mode: will block until allowed (5 calls/second)
+@throttle(calls=5, period=1.0, burst=5, mode="sleep")
+def process_item(i):
+    ...
+
+# Raise mode: raises Throttled when limit is exceeded (2 calls/second)
+@throttle(calls=2, period=1.0, mode="raise")
+def call_api():
+    ...
+
+try:
+    call_api()
+except Throttled:
+    # handle rate limit exceeded
+    ...
+```
 ```
 
 ## Web Framework Integration
@@ -228,6 +251,13 @@ Day 2: rain (cache)
 ```
 
 Each example includes comprehensive error handling and demonstrates multiple reliabilipy features working together. You can modify the configuration values (like timeouts, retry counts, etc.) in the examples to see how the system behaves under different conditions.
+
+### Throttle Example (`examples/throttle_example.py`)
+Demonstrates rate-limiting with both sleep and raise modes.
+
+```bash
+poetry run python examples/throttle_example.py
+```
 
 ## Monitoring with Prometheus
 
