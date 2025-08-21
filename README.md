@@ -334,6 +334,14 @@ poetry run pytest --cov=reliabilipy
 poetry run pytest -v
 ```
 
+## Documentation
+
+Looking for detailed, parameter-by-parameter docs and best practices? See the docs:
+
+- Docs index: `docs/index.md`
+- Features: retry, circuit breaker, timeout, safeguards, state, failure injection, metrics, throttle
+
+
 
 ## Contributing
 
